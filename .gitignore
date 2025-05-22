@@ -5,8 +5,7 @@
 node_modules
 /.pnp
 .pnp.js
-.env
-*/__data__/*.json
+.envW
 dist
 
 # testing
@@ -25,4 +24,3 @@ dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-public/images/*.jpg

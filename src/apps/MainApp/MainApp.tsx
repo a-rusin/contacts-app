@@ -1,3 +1,5 @@
+/** @format */
+
 import "./MainApp.scss";
 import { ThemeProvider } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

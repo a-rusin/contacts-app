@@ -1,18 +1,23 @@
+/** @format */
+
 import React, { memo, useState } from "react";
 
 import { Col, Row } from "react-bootstrap";
 import { ContactCard } from "src/components/ContactCard";
 import { FilterForm, FilterFormValues } from "src/components/FilterForm";
 import { useAppSelector } from "src/hooks/useAppSelector";
+import { useGetContactsQuery } from "src/store/contacts";
+import { useGetGroupsQuery } from "src/store/groups";
 
 export const ContactListPage = memo(() => {
   const [formValue, setFormValue] = useState<Partial<FilterFormValues>>({});
 
-  const contacts = useAppSelector((state) => state.contact);
-  const groups = useAppSelector((state) => state.group);
+  const { data: contacts } = useGetContactsQuery();
+
+  const { data: groups } = useGetGroupsQuery();
 
   const filterContacts = () => {
-    let filteredContacts = [...contacts];
+    let filteredContacts = contacts ? [...contacts] : [];
 
     if (formValue.name) {
       const fvName = formValue.name.toLowerCase();
@@ -22,7 +27,8 @@ export const ContactListPage = memo(() => {
     }
 
     if (formValue.groupId) {
-      const groupContacts = groups.find(({ id }) => id === formValue.groupId);
+      const groupContacts =
+        groups && groups.find(({ id }) => id === formValue.groupId);
 
       if (groupContacts) {
         filteredContacts = filteredContacts.filter(({ id }) =>

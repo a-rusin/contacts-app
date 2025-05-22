@@ -1,3 +1,5 @@
+/** @format */
+
 import { memo, useMemo } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -5,22 +7,25 @@ import { GroupContactsCard } from "src/components/GroupContactsCard";
 import { Empty } from "src/components/Empty";
 import { ContactCard } from "src/components/ContactCard";
 import { useAppSelector } from "src/hooks/useAppSelector";
+import { useGetContactsQuery } from "src/store/contacts";
+import { useGetGroupsQuery } from "src/store/groups";
 
 export const GroupPage = memo(() => {
   const { groupId } = useParams<{ groupId: string }>();
 
-  const contacts = useAppSelector((state) => state.contact);
-  const groups = useAppSelector((state) => state.group);
+  const { data: contacts } = useGetContactsQuery();
+
+  const { data: groups } = useGetGroupsQuery();
 
   const groupContacts = groups && groups.find(({ id }) => id === groupId);
 
   const filterContactsByGroup = () => {
-    let filteredContacts = [...contacts];
+    let filteredContacts = contacts ? [...contacts] : [];
 
     if (groupContacts) {
-      filteredContacts = contacts.filter(({ id }) =>
-        groupContacts.contactIds.includes(id)
-      );
+      filteredContacts = contacts
+        ? contacts.filter(({ id }) => groupContacts.contactIds.includes(id))
+        : [];
     }
 
     return filteredContacts;
