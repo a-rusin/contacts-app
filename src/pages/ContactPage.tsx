@@ -1,17 +1,17 @@
 /** @format */
 
+import { observer } from "mobx-react-lite";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { ContactCard } from "src/components/ContactCard";
 import { Empty } from "src/components/Empty";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetContactsQuery } from "src/store/contacts";
+import { contactsStore } from "src/stores/contactsStore";
 
-export const ContactPage = () => {
+export const ContactPage = observer(() => {
   const { contactId } = useParams<{ contactId: string }>();
 
-  const { data: contacts } = useGetContactsQuery();
+  const { contacts } = contactsStore;
 
   const contact = contacts && contacts.find(({ id }) => id === contactId);
 
@@ -22,4 +22,4 @@ export const ContactPage = () => {
       </Col>
     </Row>
   );
-};
+});

@@ -1,21 +1,20 @@
 /** @format */
 
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { GroupContactsCard } from "src/components/GroupContactsCard";
 import { Empty } from "src/components/Empty";
 import { ContactCard } from "src/components/ContactCard";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetContactsQuery } from "src/store/contacts";
-import { useGetGroupsQuery } from "src/store/groups";
+import { observer } from "mobx-react-lite";
+import { contactsStore } from "src/stores/contactsStore";
+import { groupsStore } from "src/stores/groupsStore";
 
-export const GroupPage = memo(() => {
+export const GroupPage = observer(() => {
   const { groupId } = useParams<{ groupId: string }>();
 
-  const { data: contacts } = useGetContactsQuery();
-
-  const { data: groups } = useGetGroupsQuery();
+  const { contacts } = contactsStore;
+  const { groups } = groupsStore;
 
   const groupContacts = groups && groups.find(({ id }) => id === groupId);
 

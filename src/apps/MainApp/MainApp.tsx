@@ -1,5 +1,6 @@
 /** @format */
 
+import { useEffect } from "react";
 import "./MainApp.scss";
 import { ThemeProvider } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -11,8 +12,18 @@ import {
   FavoritListPage,
   GroupListPage,
 } from "src/pages";
+import { contactsStore } from "src/stores/contactsStore";
+import { groupsStore } from "src/stores/groupsStore";
 
 export const MainApp = () => {
+  const { getContacts } = contactsStore;
+  const { getGroups } = groupsStore;
+
+  useEffect(() => {
+    getContacts();
+    getGroups();
+  }, []);
+
   return (
     <ThemeProvider
       breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}

@@ -1,20 +1,20 @@
 /** @format */
 
-import React, { memo, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { useState } from "react";
 
 import { Col, Row } from "react-bootstrap";
 import { ContactCard } from "src/components/ContactCard";
 import { FilterForm, FilterFormValues } from "src/components/FilterForm";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetContactsQuery } from "src/store/contacts";
-import { useGetGroupsQuery } from "src/store/groups";
+import { contactsStore } from "src/stores/contactsStore";
+import { groupsStore } from "src/stores/groupsStore";
 
-export const ContactListPage = memo(() => {
+export const ContactListPage = observer(() => {
   const [formValue, setFormValue] = useState<Partial<FilterFormValues>>({});
 
-  const { data: contacts } = useGetContactsQuery();
+  const { contacts } = contactsStore;
 
-  const { data: groups } = useGetGroupsQuery();
+  const { groups } = groupsStore;
 
   const filterContacts = () => {
     let filteredContacts = contacts ? [...contacts] : [];
