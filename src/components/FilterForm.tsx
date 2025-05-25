@@ -2,10 +2,9 @@
 
 import { Formik } from "formik";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { memo } from "react";
 import { FormikConfig } from "formik/dist/types";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetGroupsQuery } from "src/store/groups";
+import { groupsStore } from "src/stores/groupsStore";
+import { observer } from "mobx-react-lite";
 
 export interface FilterFormValues {
   name: string;
@@ -14,9 +13,9 @@ export interface FilterFormValues {
 
 interface FilterFormProps extends FormikConfig<Partial<FilterFormValues>> {}
 
-export const FilterForm = memo<FilterFormProps>(
+export const FilterForm = observer<FilterFormProps>(
   ({ onSubmit, initialValues = {} }) => {
-    const { data: groups } = useGetGroupsQuery();
+    const { groups } = groupsStore;
 
     return (
       <Formik initialValues={initialValues} onSubmit={onSubmit}>

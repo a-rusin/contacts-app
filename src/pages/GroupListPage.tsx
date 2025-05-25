@@ -1,13 +1,12 @@
 /** @format */
 
-import React, { memo } from "react";
+import { observer } from "mobx-react-lite";
 import { Col, Row } from "react-bootstrap";
 import { GroupContactsCard } from "src/components/GroupContactsCard";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetGroupsQuery } from "src/store/groups";
+import { groupsStore } from "src/stores/groupsStore";
 
-export const GroupListPage = memo(() => {
-  const { data: groups } = useGetGroupsQuery();
+export const GroupListPage = observer(() => {
+  const { groups } = groupsStore;
 
   return (
     <Row xxl={4}>

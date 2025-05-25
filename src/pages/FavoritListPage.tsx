@@ -1,13 +1,12 @@
 /** @format */
 
-import { memo } from "react";
+import { observer } from "mobx-react-lite";
 import { Col, Row } from "react-bootstrap";
 import { ContactCard } from "src/components/ContactCard";
-import { useAppSelector } from "src/hooks/useAppSelector";
-import { useGetContactsQuery } from "src/store/contacts";
+import { contactsStore } from "src/stores/contactsStore";
 
-export const FavoritListPage = memo(() => {
-  const { data: contacts } = useGetContactsQuery();
+export const FavoritListPage = observer(() => {
+  const { contacts } = contactsStore;
 
   const favsContacts = contacts
     ? contacts.filter((contact) => contact.isFav)
